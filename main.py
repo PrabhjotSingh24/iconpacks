@@ -69,6 +69,8 @@ class IconPack:
             all_files = sorted(self.new_files + self.old_files)
             for i in all_files:
                 f.write(f'        <item>{i}</item>\n')
+            f.write(f'    </string-array>\n')
+            ##
             for i in ascii_uppercase:
                 f.write(f'\n    <string-array name="{i}">\n')
                 for j in all_files:
