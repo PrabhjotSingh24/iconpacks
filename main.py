@@ -1,6 +1,9 @@
 import os
+import re
 import sys
-from string import ascii_uppercase, punctuation
+from string import ascii_uppercase
+
+PUNCTUATION=r"""!"#$%&'()*+,-./:;<=>?@[\]^`{|}~"""
 
 
 class IconPack:
@@ -91,20 +94,27 @@ class IconPack:
             self.new_files = list(map(lambda x: x.split(".")[0], self.new_files))
             self.old_files = list(map(lambda x: x.split(".")[0], self.old_files))
 
-    @staticmethod
-    def check_name(name):
-        for i in ascii_uppercase + punctuation:
-            if i in name:
-                return False
-        return True
+
+    def check_name(self,name):
+        return True if re.search(f"[A-Z]+[{PUNCTUATION}]+$",name)==True else False
+        
 
     def change_name(self):
         for names in self.new_files:
             if not self.check_name(names):
-                user_input = input("Please Enter a name: ")
-                os.rename(
+                suggestion=names.lower()
+                user_input = input(f"Please Enter a name\nSuggestion:{suggestion}\n: ")
+                if user_input.lower()=="y":
+                    os.rename(
+                    f"{self.new_path}/{names}.png", f"{self.new_path}/{suggestion}.png"
+                )
+                else:
+                    os.rename(
                     f"{self.new_path}/{names}.png", f"{self.new_path}/{user_input}.png"
                 )
+    def fix_case(self,):
+        for name in self.new_files:
+            os.rename(f"{self.new_path}/{name}.png", f"{self.new_path}/{name.lower()}.png")
 
 
 if __name__ == "__main__":
@@ -113,4 +123,6 @@ if __name__ == "__main__":
         "E:/GlassiCons Apps/Blueprint-sample (1)/Blueprint-sample/app/src/main/res/drawable-nodpi",
     )
     new_icon_pack.load_files()
+    new_icon_pack.change_name()
+    new_icon_pack.fix_case()
     new_icon_pack.generate()
