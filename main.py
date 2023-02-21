@@ -1,6 +1,6 @@
 import os
 import re
-import sys
+import shutil
 from string import ascii_uppercase
 
 PUNCTUATION = r"""!"#$%&'()*+,-./:;<=>?@[\]^`{|}~"""
@@ -123,7 +123,12 @@ class IconPack:
             os.rename(
                 f"{self.new_path}/{name}.png", f"{self.new_path}/{name.lower()}.png"
             )
-
+    def copy_files(self):
+        for name in self.new_path:
+            try:
+                shutil.copyfile(f"{self.new_path}/{name}.png",f"{self.old_path}/{name}.png")
+            except shutil.SameFileError:
+                print("File Already Exists: {name}.png\n")
 
 if __name__ == "__main__":
     new_icon_pack = IconPack(
@@ -134,3 +139,4 @@ if __name__ == "__main__":
     new_icon_pack.change_name()
     new_icon_pack.fix_case()
     new_icon_pack.generate()
+    new_icon_pack.copy_files()
