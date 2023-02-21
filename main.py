@@ -3,7 +3,7 @@ import re
 import sys
 from string import ascii_uppercase
 
-PUNCTUATION=r"""!"#$%&'()*+,-./:;<=>?@[\]^`{|}~"""
+PUNCTUATION = r"""!"#$%&'()*+,-./:;<=>?@[\]^`{|}~"""
 
 
 class IconPack:
@@ -48,38 +48,39 @@ class IconPack:
                 for j in all_files:
                     if j[0].upper() == i:
                         f.write(f'    <item drawable="{j}" />\n')
+
     def generate_iconpack(self):
         with open("iconpack.txt", "w") as f:
             f.write(f'    <string-array name="icons_preview">\n')
             self.load_files()
             for i in self.new_files:
-                f.write(f'        <item>{i}</item>\n')
-            f.write(f'    </string-array>\n')
+                f.write(f"        <item>{i}</item>\n")
+            f.write(f"    </string-array>\n")
             ##
             f.write(f'\n    <string-array name="icon_filters">\n')
-            f.write(f'        <item>New</item>\n')
-            f.write(f'        <item>All</item>\n')
+            f.write(f"        <item>New</item>\n")
+            f.write(f"        <item>All</item>\n")
             for i in ascii_uppercase:
-                f.write(f'        <item>{i}</item>\n')
-            f.write(f'    </string-array>\n')
+                f.write(f"        <item>{i}</item>\n")
+            f.write(f"    </string-array>\n")
             ##
             f.write(f'\n    <string-array name="New">\n')
             for i in self.new_files:
-                f.write(f'        <item>{i}</item>\n')
-            f.write(f'    </string-array>\n')
+                f.write(f"        <item>{i}</item>\n")
+            f.write(f"    </string-array>\n")
             #!All files
             f.write(f'\n    <string-array name="All">\n')
             all_files = sorted(self.new_files + self.old_files)
             for i in all_files:
-                f.write(f'        <item>{i}</item>\n')
-            f.write(f'    </string-array>\n')
+                f.write(f"        <item>{i}</item>\n")
+            f.write(f"    </string-array>\n")
             ##
             for i in ascii_uppercase:
                 f.write(f'\n    <string-array name="{i}">\n')
                 for j in all_files:
                     if j[0].upper() == i:
-                        f.write(f'        <item>{j}</item>\n')
-                f.write(f'    </string-array>\n')
+                        f.write(f"        <item>{j}</item>\n")
+                f.write(f"    </string-array>\n")
 
     def load_files(self, with_extensions=False):
         self.new_files = os.listdir(self.new_path)
@@ -94,27 +95,34 @@ class IconPack:
             self.new_files = list(map(lambda x: x.split(".")[0], self.new_files))
             self.old_files = list(map(lambda x: x.split(".")[0], self.old_files))
 
-
-    def check_name(self,name):
-        return True if re.search(f"[A-Z]+[{PUNCTUATION}]+$",name)==True else False
-        
+    def check_name(self, name):
+        if re.search("[#$%&()*+-.?@]", name) or re.search("[A-Z]", name):
+            return False
+        return True
 
     def change_name(self):
         for names in self.new_files:
             if not self.check_name(names):
-                suggestion=names.lower()
+                suggestion = names.lower()
                 user_input = input(f"Please Enter a name\nSuggestion:{suggestion}\n: ")
-                if user_input.lower()=="y":
+                if user_input.lower() == "y":
                     os.rename(
-                    f"{self.new_path}/{names}.png", f"{self.new_path}/{suggestion}.png"
-                )
+                        f"{self.new_path}/{names}.png",
+                        f"{self.new_path}/{suggestion}.png",
+                    )
                 else:
                     os.rename(
-                    f"{self.new_path}/{names}.png", f"{self.new_path}/{user_input}.png"
-                )
-    def fix_case(self,):
+                        f"{self.new_path}/{names}.png",
+                        f"{self.new_path}/{user_input}.png",
+                    )
+
+    def fix_case(
+        self,
+    ):
         for name in self.new_files:
-            os.rename(f"{self.new_path}/{name}.png", f"{self.new_path}/{name.lower()}.png")
+            os.rename(
+                f"{self.new_path}/{name}.png", f"{self.new_path}/{name.lower()}.png"
+            )
 
 
 if __name__ == "__main__":

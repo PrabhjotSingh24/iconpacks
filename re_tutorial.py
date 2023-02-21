@@ -3,5 +3,5 @@
 import re
 
 PUNCTUATION=r"""!"#$%&'()*+,-./:;<=>?@[\]^`{|}~"""
-name="bixby_routine_alT"
-print(re.search(f"[A-Z]+[#$%&'()*+,-./:;<=>?@[\]^`]+$",name))
+name="bixby_routine_@alt"
+print(bool(re.search(f"[#$%&()*+-.?@]+[A-Z]",name)))
