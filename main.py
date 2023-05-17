@@ -50,10 +50,11 @@ class IconPack:
                         f.write(f'    <item drawable="{j}" />\n')
 
     def generate_iconpack(self):
+        all_files = sorted(self.new_files + self.old_files)
         with open("iconpack.txt", "w") as f:
             f.write(f'    <string-array name="icons_preview">\n')
             self.load_files()
-            for i in self.new_files:
+            for i in all_files:
                 f.write(f"        <item>{i}</item>\n")
             f.write(f"    </string-array>\n")
             ##
@@ -70,7 +71,7 @@ class IconPack:
             f.write(f"    </string-array>\n")
             #!All files
             f.write(f'\n    <string-array name="All">\n')
-            all_files = sorted(self.new_files + self.old_files)
+            
             for i in all_files:
                 f.write(f"        <item>{i}</item>\n")
             f.write(f"    </string-array>\n")
@@ -124,7 +125,7 @@ class IconPack:
                 f"{self.new_path}/{name}.png", f"{self.new_path}/{name.lower()}.png"
             )
     def copy_files(self):
-        for name in self.new_path:
+        for name in self.new_files:
             try:
                 shutil.copyfile(f"{self.new_path}/{name}.png",f"{self.old_path}/{name}.png")
             except shutil.SameFileError:
@@ -134,6 +135,8 @@ if __name__ == "__main__":
     new_icon_pack = IconPack(
         "E:/GlassiCons Apps/Fiesta New",
         "E:/GlassiCons Apps/Blueprint-sample (1)/Blueprint-sample/app/src/main/res/drawable-nodpi",
+        #  "E:/GlassiCons Apps/Glassicons New",
+        # "E:/GlassiCons Apps/Blueprint/app/src/main/res/drawable-nodpi",
     )
     new_icon_pack.load_files()
     new_icon_pack.change_name()
