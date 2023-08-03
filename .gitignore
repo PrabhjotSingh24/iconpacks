@@ -2,3 +2,8 @@
 /Blueprint/
 /Fiesta IOS/
 *txt
+re_tutorial.py
+user_interface.py
+__pycache__
+__pycache__/
+*.vscode

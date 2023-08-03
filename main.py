@@ -133,13 +133,13 @@ class IconPack:
 
 if __name__ == "__main__":
     new_icon_pack = IconPack(
-        "E:/GlassiCons Apps/Fiesta New",
-        "E:/GlassiCons Apps/Blueprint-sample (1)/Blueprint-sample/app/src/main/res/drawable-nodpi",
         #  "E:/GlassiCons Apps/Glassicons New",
         # "E:/GlassiCons Apps/Blueprint/app/src/main/res/drawable-nodpi",
-    )
+        "E:/GlassiCons Apps/Fiesta New","E:/GlassiCons Apps/fiesta icons/Blueprint-sample/app/src/main/res/drawable-nodpi")
+        
+    
     new_icon_pack.load_files()
-    new_icon_pack.change_name()
-    new_icon_pack.fix_case()
+    # new_icon_pack.change_name()
+    # new_icon_pack.fix_case()
     new_icon_pack.generate()
     new_icon_pack.copy_files()
