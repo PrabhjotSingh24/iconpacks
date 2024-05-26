@@ -3,9 +3,11 @@ import re
 import shutil
 from string import ascii_uppercase
 
+
 PUNCTUATION = r"""!"#$%&'()*+,-./:;<=>?@[\]^`{|}~"""
 
-
+def fix_path(string):
+    return string.replace("\\","/")
 class IconPack:
     def __init__(
         self,
@@ -30,7 +32,9 @@ class IconPack:
 
     def generate(self):
         self.generate_drawable()
-        self.generate_iconpack()
+        # self.generate_iconpack()
+
+        
 
     def generate_drawable(self):
         with open("drawable.txt", "w") as f:
@@ -39,13 +43,13 @@ class IconPack:
             for i in self.new_files:
                 f.write(f'    <item drawable="{i}" />\n')
             #!All files
-            f.write(f'\n    <category title="All" />\n\n')
-            all_files = sorted(self.new_files + self.old_files)
-            for i in all_files:
-                f.write(f'    <item drawable="{i}" />\n')
+            # f.write(f'\n    <category title="All" />\n\n')
+            # all_files = sorted(self.new_files + self.old_files)
+            # for i in all_files:
+            #     f.write(f'    <item drawable="{i}" />\n')
             for i in ascii_uppercase:
                 f.write(f'\n    <category title="{i}" />\n\n')
-                for j in all_files:
+                for j in self.old_files:
                     if j[0].upper() == i:
                         f.write(f'    <item drawable="{j}" />\n')
 
@@ -132,10 +136,11 @@ class IconPack:
                 print("File Already Exists: {name}.png\n")
 
 if __name__ == "__main__":
+    
     new_icon_pack = IconPack(
-        #  "E:/GlassiCons Apps/Glassicons New",
-        # "E:/GlassiCons Apps/Blueprint/app/src/main/res/drawable-nodpi",
-        "E:/GlassiCons Apps/Fiesta New","E:/GlassiCons Apps/fiesta icons/Blueprint-sample/app/src/main/res/drawable-nodpi")
+         fix_path(r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\glassicons new"),
+        fix_path(r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\glassicons\app\src\main\res\drawable-nodpi"))
+        # "E:/GlassiCons Apps/Fiesta New","E:/GlassiCons Apps/fiesta icons/Blueprint-sample/app/src/main/res/drawable-nodpi")
         
     
     new_icon_pack.load_files()
