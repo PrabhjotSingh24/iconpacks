@@ -2,7 +2,7 @@ import os
 import re
 import shutil
 from string import ascii_uppercase
-
+from xml.etree import ElementTree as ET
 
 PUNCTUATION = r"""!"#$%&'()*+,-./:;<=>?@[\]^`{|}~"""
 
@@ -31,10 +31,10 @@ class IconPack:
         self.old_files = []
 
     def generate(self):
-        self.generate_drawable()
+        self.generate_drawable_v2()
         # self.generate_iconpack()
 
-        
+
 
     def generate_drawable(self):
         with open("drawable.txt", "w") as f:
@@ -52,6 +52,28 @@ class IconPack:
                 for j in self.old_files:
                     if j[0].upper() == i:
                         f.write(f'    <item drawable="{j}" />\n')
+
+    def generate_drawable_v2(self):
+        root=ET.Element("resources")
+        ver=ET.SubElement(root,"version").text="1"
+        root.append(ET.Comment(""))
+        self.load_files()
+        ET.SubElement(root,"category",title="New")
+        root.append(ET.Comment(""))
+        for i in self.new_files:
+            ET.SubElement(root,"item",{"drawable":i})
+        else:
+            root.append(ET.Comment(""))
+        for i in ascii_uppercase:
+            ET.SubElement(root,"category",title=i).tail="\n "
+            for j in self.old_files:
+                if j[0].upper() == i:
+                    ET.SubElement(root,"item",{"drawable":j})
+            else:
+                root.append(ET.Comment(""))
+        tree=ET.ElementTree(root)
+        ET.indent(tree)
+        tree.write("drawable.xml",encoding="utf-8",xml_declaration=True)
 
     def generate_iconpack(self):
         all_files = sorted(self.new_files + self.old_files)
@@ -75,7 +97,7 @@ class IconPack:
             f.write(f"    </string-array>\n")
             #!All files
             f.write(f'\n    <string-array name="All">\n')
-            
+
             for i in all_files:
                 f.write(f"        <item>{i}</item>\n")
             f.write(f"    </string-array>\n")
@@ -121,9 +143,7 @@ class IconPack:
                         f"{self.new_path}/{user_input}.png",
                     )
 
-    def fix_case(
-        self,
-    ):
+    def fix_case(self):
         for name in self.new_files:
             os.rename(
                 f"{self.new_path}/{name}.png", f"{self.new_path}/{name.lower()}.png"
@@ -136,15 +156,15 @@ class IconPack:
                 print("File Already Exists: {name}.png\n")
 
 if __name__ == "__main__":
-    
-    new_icon_pack = IconPack(
-         fix_path(r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\glassicons new"),
-        fix_path(r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\glassicons\app\src\main\res\drawable-nodpi"))
-        # "E:/GlassiCons Apps/Fiesta New","E:/GlassiCons Apps/fiesta icons/Blueprint-sample/app/src/main/res/drawable-nodpi")
-        
-    
+
+    new_icon_pack = IconPack("/Users/prabhjotsingh/Desktop/fiona exports","/Users/prabhjotsingh/Desktop/fiona exports")
+        #  fix_path(r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\glassicons new"),
+        # fix_path(r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\glassicons\app\src\main\res\drawable-nodpi"))
+        # # "E:/GlassiCons Apps/Fiesta New","E:/GlassiCons Apps/fiesta icons/Blueprint-sample/app/src/main/res/drawable-nodpi")
+
+
     new_icon_pack.load_files()
     # new_icon_pack.change_name()
     # new_icon_pack.fix_case()
     new_icon_pack.generate()
-    new_icon_pack.copy_files()
+    # new_icon_pack.copy_files()
