@@ -31,33 +31,15 @@ class IconPack:
         self.old_files = []
 
     def generate(self):
-        self.generate_drawable_v2()
+        self.generate_drawable()
         # self.generate_iconpack()
 
 
-
     def generate_drawable(self):
-        with open("drawable.txt", "w") as f:
-            f.write(f'    <category title="New" />\n\n')
-            self.load_files()
-            for i in self.new_files:
-                f.write(f'    <item drawable="{i}" />\n')
-            #!All files
-            # f.write(f'\n    <category title="All" />\n\n')
-            # all_files = sorted(self.new_files + self.old_files)
-            # for i in all_files:
-            #     f.write(f'    <item drawable="{i}" />\n')
-            for i in ascii_uppercase:
-                f.write(f'\n    <category title="{i}" />\n\n')
-                for j in self.old_files:
-                    if j[0].upper() == i:
-                        f.write(f'    <item drawable="{j}" />\n')
-
-    def generate_drawable_v2(self):
         root=ET.Element("resources")
         ver=ET.SubElement(root,"version").text="1"
         root.append(ET.Comment(""))
-        self.load_files()
+        # self.load_files() redundant line already called in the main
         ET.SubElement(root,"category",title="New")
         root.append(ET.Comment(""))
         for i in self.new_files:
@@ -127,6 +109,7 @@ class IconPack:
             return False
         return True
 
+#TODO: Fix how the change_name method fixes the name
     def change_name(self):
         for names in self.new_files:
             if not self.check_name(names):
