@@ -6,8 +6,11 @@ from xml.etree import ElementTree as ET
 
 PUNCTUATION = r"""!"#$%&'()*+,-./:;<=>?@[\]^`{|}~"""
 
-def fix_path(string):
-    return string.replace("\\","/")
+
+def fix_path(*strings):
+    return tuple(map(lambda x: x.replace("\\", "/"), strings))
+
+
 class IconPack:
     def __init__(
         self,
@@ -22,7 +25,7 @@ class IconPack:
             "drawable.txt",
             "iconpack.txt",
             ".git",
-            "ic_splash_screen_1","ic_splash_screen","clock_bg","clock_minute","clock_hour"
+            "ic_splash_screen_1", "ic_splash_screen", "clock_bg", "clock_minute", "clock_hour"
         ],
     ):
         self.new_path = new_path
@@ -35,28 +38,27 @@ class IconPack:
         self.generate_drawable()
         # self.generate_iconpack()
 
-
     def generate_drawable(self):
-        root=ET.Element("resources")
-        ver=ET.SubElement(root,"version").text="1"
+        root = ET.Element("resources")
+        ver = ET.SubElement(root, "version").text = "1"
         root.append(ET.Comment(""))
         # self.load_files() redundant line already called in the main
-        ET.SubElement(root,"category",title="New")
+        ET.SubElement(root, "category", title="New")
         root.append(ET.Comment(""))
         for i in self.new_files:
-            ET.SubElement(root,"item",{"drawable":i})
+            ET.SubElement(root, "item", {"drawable": i})
         else:
             root.append(ET.Comment(""))
         for i in ascii_uppercase:
-            ET.SubElement(root,"category",title=i).tail="\n "
+            ET.SubElement(root, "category", title=i).tail = "\n "
             for j in self.old_files:
                 if j[0].upper() == i:
-                    ET.SubElement(root,"item",{"drawable":j})
+                    ET.SubElement(root, "item", {"drawable": j})
             else:
                 root.append(ET.Comment(""))
-        tree=ET.ElementTree(root)
+        tree = ET.ElementTree(root)
         ET.indent(tree)
-        tree.write("drawable.xml",encoding="utf-8",xml_declaration=True)
+        tree.write("drawable.xml", encoding="utf-8", xml_declaration=True)
 
     def generate_iconpack(self):
         all_files = sorted(self.new_files + self.old_files)
@@ -78,7 +80,7 @@ class IconPack:
             for i in self.new_files:
                 f.write(f"        <item>{i}</item>\n")
             f.write(f"    </string-array>\n")
-            #!All files
+            # !All files
             f.write(f'\n    <string-array name="All">\n')
 
             for i in all_files:
@@ -110,7 +112,7 @@ class IconPack:
             return False
         return True
 
-#TODO: Fix how the change_name method fixes the name
+    # TODO: Fix how the change_name method fixes the name
     def change_name(self):
         for names in self.new_files:
             if not self.check_name(names):
@@ -132,20 +134,20 @@ class IconPack:
             os.rename(
                 f"{self.new_path}/{name}.png", f"{self.new_path}/{name.lower()}.png"
             )
+
     def copy_files(self):
         for name in self.new_files:
             try:
-                shutil.copyfile(f"{self.new_path}/{name}.png",f"{self.old_path}/{name}.png")
+                shutil.copyfile(f"{self.new_path}/{name}.png", f"{self.old_path}/{name}.png")
             except shutil.SameFileError:
                 print("File Already Exists: {name}.png\n")
 
+
 if __name__ == "__main__":
-
-    new_icon_pack = IconPack("/Users/prabhjotsingh/Desktop/fiona exports","/Users/prabhjotsingh/Desktop/fiona exports")
-        #  fix_path(r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\glassicons new"),
-        # fix_path(r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\glassicons\app\src\main\res\drawable-nodpi"))
-        # # "E:/GlassiCons Apps/Fiesta New","E:/GlassiCons Apps/fiesta icons/Blueprint-sample/app/src/main/res/drawable-nodpi")
-
+    new_icon_pack = IconPack("/Users/prabhjotsingh/Desktop/fiona exports", "/Users/prabhjotsingh/Desktop/fiona exports")
+    #  fix_path(r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\glassicons new"),
+    # fix_path(r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\glassicons\app\src\main\res\drawable-nodpi"))
+    # # "E:/GlassiCons Apps/Fiesta New","E:/GlassiCons Apps/fiesta icons/Blueprint-sample/app/src/main/res/drawable-nodpi")
 
     new_icon_pack.load_files()
     # new_icon_pack.change_name()
