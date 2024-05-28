@@ -8,26 +8,29 @@ PUNCTUATION = r"""!"#$%&'()*+,-./:;<=>?@[\]^`{|}~"""
 
 
 def fix_path(*strings):
-    return tuple(map(lambda x: x.replace("\\", "/"), strings))
+    return list(map(lambda x: x.replace("\\", "/"), strings))
 
 
-class IconPack:
+class IconPackGeneration:
     def __init__(
         self,
         new_path,
         old_path,
-        default_files_to_ignore=[
-            "app_splash_screen_picture.png",
-            "main.py",
-            "default_wall.png",
-            ".vscode",
-            ".gitignore",
-            "drawable.txt",
-            "iconpack.txt",
-            ".git",
-            "ic_splash_screen_1", "ic_splash_screen", "clock_bg", "clock_minute", "clock_hour"
-        ],
+        default_files_to_ignore=None,
     ):
+        if default_files_to_ignore is None:
+            default_files_to_ignore = [
+                "app_splash_screen_picture.png",
+                "main.py",
+                "default_wall.png",
+                ".vscode",
+                ".gitignore",
+                "drawable.txt",
+                "iconpack.txt",
+                ".git",
+                "ic_splash_screen1.png", "ic_splash_screen.png", "clock_bg.png", "clock_minute.png", "clock_hour.png",
+                "pd_logo.png", "home_image.png", "nav_bar.png"
+            ]
         self.new_path = new_path
         self.old_path = old_path
         self.ignored_files = default_files_to_ignore
@@ -100,6 +103,7 @@ class IconPack:
         self.new_files = list(
             filter(lambda x: x not in self.ignored_files, self.new_files)
         )
+
         self.old_files = list(
             filter(lambda x: x not in self.ignored_files, self.old_files)
         )
@@ -144,7 +148,8 @@ class IconPack:
 
 
 if __name__ == "__main__":
-    new_icon_pack = IconPack("/Users/prabhjotsingh/Desktop/fiona exports", "/Users/prabhjotsingh/Desktop/fiona exports")
+    new_icon_pack = IconPackGeneration("/Users/prabhjotsingh/Desktop/fiona exports",
+                                       "/Users/prabhjotsingh/Desktop/fiona exports")
     #  fix_path(r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\glassicons new"),
     # fix_path(r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\glassicons\app\src\main\res\drawable-nodpi"))
     # # "E:/GlassiCons Apps/Fiesta New","E:/GlassiCons Apps/fiesta icons/Blueprint-sample/app/src/main/res/drawable-nodpi")
