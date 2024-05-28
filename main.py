@@ -22,6 +22,7 @@ class IconPack:
             "drawable.txt",
             "iconpack.txt",
             ".git",
+            "ic_splash_screen_1","ic_splash_screen","clock_bg","clock_minute","clock_hour"
         ],
     ):
         self.new_path = new_path
