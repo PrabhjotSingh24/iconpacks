@@ -44,8 +44,8 @@ class IconPackGeneration:
         self.old_files = []
 
     def generate(self):
-        self.generate_drawable()
-        # self.generate_iconpack()
+        self.generate_drawable_blueprint()
+        self.generate_iconpack()
 
     def generate_drawable_candybar(self):
         root = ET.Element("resources")
@@ -61,10 +61,11 @@ class IconPackGeneration:
         for i in ascii_uppercase:
             ET.SubElement(root, "category", title=i).tail = "\n "
             for j in self.old_files:
-                if j[0].upper() == i:
-                    ET.SubElement(root, "item", {"drawable": j})
-            else:
-                root.append(ET.Comment(""))
+                if j != "":
+                    if j[0].upper() == i:
+                        ET.SubElement(root, "item", {"drawable": j})
+                else:
+                    root.append(ET.Comment(""))
         tree = ET.ElementTree(root)
         ET.indent(tree)
         tree.write("drawable.xml", encoding="utf-8", xml_declaration=True)
@@ -89,47 +90,58 @@ class IconPackGeneration:
         for i in ascii_uppercase:
             ET.SubElement(root, "category", title=i).tail = "\n "
             for j in self.old_files:
-                if j[0].upper() == i:
-                    ET.SubElement(root, "item", {"drawable": j})
-            else:
-                root.append(ET.Comment(""))
+                if j != "":
+                    if j[0].upper() == i:
+                        ET.SubElement(root, "item", {"drawable": j})
+                else:
+                    root.append(ET.Comment(""))
         tree = ET.ElementTree(root)
         ET.indent(tree)
         tree.write("drawable.xml", encoding="utf-8", xml_declaration=True)
 
     def generate_iconpack(self):
         all_files = sorted(self.new_files + self.old_files)
-        with open("iconpack.txt", "w") as f:
-            f.write(f'    <string-array name="icons_preview">\n')
-            self.load_files()
-            for i in all_files:
-                f.write(f"        <item>{i}</item>\n")
-            f.write(f"    </string-array>\n")
-            ##
-            f.write(f'\n    <string-array name="icon_filters">\n')
-            f.write(f"        <item>New</item>\n")
-            f.write(f"        <item>All</item>\n")
-            for i in ascii_uppercase:
-                f.write(f"        <item>{i}</item>\n")
-            f.write(f"    </string-array>\n")
-            ##
-            f.write(f'\n    <string-array name="New">\n')
-            for i in self.new_files:
-                f.write(f"        <item>{i}</item>\n")
-            f.write(f"    </string-array>\n")
-            # !All files
-            f.write(f'\n    <string-array name="All">\n')
-
-            for i in all_files:
-                f.write(f"        <item>{i}</item>\n")
-            f.write(f"    </string-array>\n")
-            ##
-            for i in ascii_uppercase:
-                f.write(f'\n    <string-array name="{i}">\n')
-                for j in all_files:
+        root = ET.Element(
+            "resources",
+            attrib={
+                "xmlns:tools": "http://schemas.android.com/tools",
+                "tools:ignore": "ExtraTranslation",
+            },
+        )
+        root.append(ET.Comment(""))
+        # self.load_files() redundant line already called in the main
+        ET.SubElement(root, "string-array", {"name": "icon_preview"})
+        root.append(ET.Comment(""))
+        for i in all_files:
+            ET.SubElement(root, "item").text = i
+        root.append(ET.Comment(""))
+        ET.SubElement(root, "string-array", {"name": "icon_filters"})
+        root.append(ET.Comment(""))
+        ET.SubElement(root, "item").text = "New"
+        ET.SubElement(root, "item").text = "All"
+        for i in ascii_uppercase:
+            ET.SubElement(root, "item").text = i
+        root.append(ET.Comment(""))
+        ET.SubElement(root, "string-array", {"name": "New"})
+        root.append(ET.Comment(""))
+        for i in self.new_files:
+            ET.SubElement(root, "item").text = i
+        ET.SubElement(root, "string-array", {"name": "All"})
+        root.append(ET.Comment(""))
+        for i in all_files:
+            ET.SubElement(root, "item").text = i
+        root.append(ET.Comment(""))
+        for i in ascii_uppercase:
+            ET.SubElement(root, "string-array", {"name": i})
+            root.append(ET.Comment(""))
+            for j in self.old_files:
+                if j != "":
                     if j[0].upper() == i:
-                        f.write(f"        <item>{j}</item>\n")
-                f.write(f"    </string-array>\n")
+                        ET.SubElement(root, "item").text = j
+            root.append(ET.Comment(""))
+        tree = ET.ElementTree(root)
+        ET.indent(tree)
+        tree.write("iconpack.xml", encoding="utf-8", xml_declaration=True)
 
     def load_files(self, with_extensions=False):
         self.new_files = os.listdir(self.new_path)

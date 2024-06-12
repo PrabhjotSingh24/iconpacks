@@ -1,0 +1,210 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ExtraTranslation">
+  <!---->
+  <string-array name="icon_preview" />
+  <!---->
+  <item />
+  <item />
+  <item>chrome</item>
+  <item>chrome</item>
+  <item>discord</item>
+  <item>discord</item>
+  <item>facebook</item>
+  <item>facebook</item>
+  <item>google_calendar_03</item>
+  <item>google_calendar_03</item>
+  <item>instagram_alt</item>
+  <item>instagram_alt</item>
+  <item>music</item>
+  <item>music</item>
+  <item>snapchat</item>
+  <item>snapchat</item>
+  <item>telegram</item>
+  <item>telegram</item>
+  <item>telegram_alt</item>
+  <item>telegram_alt</item>
+  <item>telegram_alt-1</item>
+  <item>telegram_alt-1</item>
+  <item>whatsapp</item>
+  <item>whatsapp</item>
+  <item>whatsapp_alt</item>
+  <item>whatsapp_alt</item>
+  <item>youtube</item>
+  <item>youtube</item>
+  <item>yt_music</item>
+  <item>yt_music</item>
+  <!---->
+  <string-array name="icon_filters" />
+  <!---->
+  <item>New</item>
+  <item>All</item>
+  <item>A</item>
+  <item>B</item>
+  <item>C</item>
+  <item>D</item>
+  <item>E</item>
+  <item>F</item>
+  <item>G</item>
+  <item>H</item>
+  <item>I</item>
+  <item>J</item>
+  <item>K</item>
+  <item>L</item>
+  <item>M</item>
+  <item>N</item>
+  <item>O</item>
+  <item>P</item>
+  <item>Q</item>
+  <item>R</item>
+  <item>S</item>
+  <item>T</item>
+  <item>U</item>
+  <item>V</item>
+  <item>W</item>
+  <item>X</item>
+  <item>Y</item>
+  <item>Z</item>
+  <!---->
+  <string-array name="New" />
+  <!---->
+  <item>telegram</item>
+  <item>whatsapp_alt</item>
+  <item>telegram_alt</item>
+  <item />
+  <item>music</item>
+  <item>instagram_alt</item>
+  <item>google_calendar_03</item>
+  <item>chrome</item>
+  <item>discord</item>
+  <item>telegram_alt-1</item>
+  <item>youtube</item>
+  <item>whatsapp</item>
+  <item>facebook</item>
+  <item>yt_music</item>
+  <item>snapchat</item>
+  <string-array name="All" />
+  <!---->
+  <item />
+  <item />
+  <item>chrome</item>
+  <item>chrome</item>
+  <item>discord</item>
+  <item>discord</item>
+  <item>facebook</item>
+  <item>facebook</item>
+  <item>google_calendar_03</item>
+  <item>google_calendar_03</item>
+  <item>instagram_alt</item>
+  <item>instagram_alt</item>
+  <item>music</item>
+  <item>music</item>
+  <item>snapchat</item>
+  <item>snapchat</item>
+  <item>telegram</item>
+  <item>telegram</item>
+  <item>telegram_alt</item>
+  <item>telegram_alt</item>
+  <item>telegram_alt-1</item>
+  <item>telegram_alt-1</item>
+  <item>whatsapp</item>
+  <item>whatsapp</item>
+  <item>whatsapp_alt</item>
+  <item>whatsapp_alt</item>
+  <item>youtube</item>
+  <item>youtube</item>
+  <item>yt_music</item>
+  <item>yt_music</item>
+  <!---->
+  <string-array name="A" />
+  <!---->
+  <!---->
+  <string-array name="B" />
+  <!---->
+  <!---->
+  <string-array name="C" />
+  <!---->
+  <item>chrome</item>
+  <!---->
+  <string-array name="D" />
+  <!---->
+  <item>discord</item>
+  <!---->
+  <string-array name="E" />
+  <!---->
+  <!---->
+  <string-array name="F" />
+  <!---->
+  <item>facebook</item>
+  <!---->
+  <string-array name="G" />
+  <!---->
+  <item>google_calendar_03</item>
+  <!---->
+  <string-array name="H" />
+  <!---->
+  <!---->
+  <string-array name="I" />
+  <!---->
+  <item>instagram_alt</item>
+  <!---->
+  <string-array name="J" />
+  <!---->
+  <!---->
+  <string-array name="K" />
+  <!---->
+  <!---->
+  <string-array name="L" />
+  <!---->
+  <!---->
+  <string-array name="M" />
+  <!---->
+  <item>music</item>
+  <!---->
+  <string-array name="N" />
+  <!---->
+  <!---->
+  <string-array name="O" />
+  <!---->
+  <!---->
+  <string-array name="P" />
+  <!---->
+  <!---->
+  <string-array name="Q" />
+  <!---->
+  <!---->
+  <string-array name="R" />
+  <!---->
+  <!---->
+  <string-array name="S" />
+  <!---->
+  <item>snapchat</item>
+  <!---->
+  <string-array name="T" />
+  <!---->
+  <item>telegram</item>
+  <item>telegram_alt</item>
+  <item>telegram_alt-1</item>
+  <!---->
+  <string-array name="U" />
+  <!---->
+  <!---->
+  <string-array name="V" />
+  <!---->
+  <!---->
+  <string-array name="W" />
+  <!---->
+  <item>whatsapp_alt</item>
+  <item>whatsapp</item>
+  <!---->
+  <string-array name="X" />
+  <!---->
+  <!---->
+  <string-array name="Y" />
+  <!---->
+  <item>youtube</item>
+  <item>yt_music</item>
+  <!---->
+  <string-array name="Z" />
+  <!---->
+  <!---->
+</resources>

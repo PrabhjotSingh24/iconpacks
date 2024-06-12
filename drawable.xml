@@ -4,44 +4,78 @@
   <!---->
   <category title="New" />
   <!---->
-  <item drawable="telegram_x" />
   <item drawable="telegram" />
   <item drawable="whatsapp_alt" />
   <item drawable="telegram_alt" />
+  <item drawable="" />
   <item drawable="music" />
   <item drawable="instagram_alt" />
-  <item drawable="youtube_music" />
+  <item drawable="google_calendar_03" />
   <item drawable="chrome" />
   <item drawable="discord" />
+  <item drawable="telegram_alt-1" />
   <item drawable="youtube" />
   <item drawable="whatsapp" />
   <item drawable="facebook" />
-  <item drawable="camera" />
+  <item drawable="yt_music" />
   <item drawable="snapchat" />
+  <!---->
+  <category title="All" />
+  <!---->
+  <item drawable="" />
+  <item drawable="" />
+  <item drawable="chrome" />
+  <item drawable="chrome" />
+  <item drawable="discord" />
+  <item drawable="discord" />
+  <item drawable="facebook" />
+  <item drawable="facebook" />
+  <item drawable="google_calendar_03" />
+  <item drawable="google_calendar_03" />
+  <item drawable="instagram_alt" />
+  <item drawable="instagram_alt" />
+  <item drawable="music" />
+  <item drawable="music" />
+  <item drawable="snapchat" />
+  <item drawable="snapchat" />
+  <item drawable="telegram" />
+  <item drawable="telegram" />
+  <item drawable="telegram_alt" />
+  <item drawable="telegram_alt" />
+  <item drawable="telegram_alt-1" />
+  <item drawable="telegram_alt-1" />
+  <item drawable="whatsapp" />
+  <item drawable="whatsapp" />
+  <item drawable="whatsapp_alt" />
+  <item drawable="whatsapp_alt" />
+  <item drawable="youtube" />
+  <item drawable="youtube" />
+  <item drawable="yt_music" />
+  <item drawable="yt_music" />
   <!---->
   <category title="A" />
   <!---->
   <category title="B" />
   <!---->
   <category title="C" />
+  <!---->
   <item drawable="chrome" />
-  <item drawable="camera" />
-  <!---->
   <category title="D" />
-  <item drawable="discord" />
   <!---->
+  <item drawable="discord" />
   <category title="E" />
   <!---->
   <category title="F" />
-  <item drawable="facebook" />
   <!---->
+  <item drawable="facebook" />
   <category title="G" />
   <!---->
+  <item drawable="google_calendar_03" />
   <category title="H" />
   <!---->
   <category title="I" />
-  <item drawable="instagram_alt" />
   <!---->
+  <item drawable="instagram_alt" />
   <category title="J" />
   <!---->
   <category title="K" />
@@ -49,8 +83,8 @@
   <category title="L" />
   <!---->
   <category title="M" />
-  <item drawable="music" />
   <!---->
+  <item drawable="music" />
   <category title="N" />
   <!---->
   <category title="O" />
@@ -62,27 +96,27 @@
   <category title="R" />
   <!---->
   <category title="S" />
-  <item drawable="snapchat" />
   <!---->
+  <item drawable="snapchat" />
   <category title="T" />
-  <item drawable="telegram_x" />
   <item drawable="telegram" />
   <item drawable="telegram_alt" />
   <!---->
+  <item drawable="telegram_alt-1" />
   <category title="U" />
   <!---->
   <category title="V" />
   <!---->
   <category title="W" />
   <item drawable="whatsapp_alt" />
-  <item drawable="whatsapp" />
   <!---->
+  <item drawable="whatsapp" />
   <category title="X" />
   <!---->
   <category title="Y" />
-  <item drawable="youtube_music" />
-  <item drawable="youtube" />
   <!---->
+  <item drawable="youtube" />
+  <item drawable="yt_music" />
   <category title="Z" />
   <!---->
 </resources>
