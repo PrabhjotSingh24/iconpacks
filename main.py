@@ -28,8 +28,14 @@ class IconPackGeneration:
                 "drawable.txt",
                 "iconpack.txt",
                 ".git",
-                "ic_splash_screen1.png", "ic_splash_screen.png", "clock_bg.png", "clock_minute.png", "clock_hour.png",
-                "pd_logo.png", "home_image.png", "nav_bar.png"
+                "ic_splash_screen1.png",
+                "ic_splash_screen.png",
+                "clock_bg.png",
+                "clock_minute.png",
+                "clock_hour.png",
+                "pd_logo.png",
+                "home_image.png",
+                "nav_bar.png",
             ]
         self.new_path = new_path
         self.old_path = old_path
@@ -41,7 +47,7 @@ class IconPackGeneration:
         self.generate_drawable()
         # self.generate_iconpack()
 
-    def generate_drawable(self):
+    def generate_drawable_candybar(self):
         root = ET.Element("resources")
         ver = ET.SubElement(root, "version").text = "1"
         root.append(ET.Comment(""))
@@ -49,6 +55,34 @@ class IconPackGeneration:
         ET.SubElement(root, "category", title="New")
         root.append(ET.Comment(""))
         for i in self.new_files:
+            ET.SubElement(root, "item", {"drawable": i})
+        else:
+            root.append(ET.Comment(""))
+        for i in ascii_uppercase:
+            ET.SubElement(root, "category", title=i).tail = "\n "
+            for j in self.old_files:
+                if j[0].upper() == i:
+                    ET.SubElement(root, "item", {"drawable": j})
+            else:
+                root.append(ET.Comment(""))
+        tree = ET.ElementTree(root)
+        ET.indent(tree)
+        tree.write("drawable.xml", encoding="utf-8", xml_declaration=True)
+
+    def generate_drawable_blueprint(self):
+        root = ET.Element("resources")
+        ver = ET.SubElement(root, "version").text = "1"
+        root.append(ET.Comment(""))
+        # self.load_files() redundant line already called in the main
+        ET.SubElement(root, "category", title="New")
+        root.append(ET.Comment(""))
+        for i in self.new_files:
+            ET.SubElement(root, "item", {"drawable": i})
+        else:
+            root.append(ET.Comment(""))
+        ET.SubElement(root, "category", title="All")
+        root.append(ET.Comment(""))
+        for i in sorted(self.new_files + self.old_files):
             ET.SubElement(root, "item", {"drawable": i})
         else:
             root.append(ET.Comment(""))
@@ -142,14 +176,18 @@ class IconPackGeneration:
     def copy_files(self):
         for name in self.new_files:
             try:
-                shutil.copyfile(f"{self.new_path}/{name}.png", f"{self.old_path}/{name}.png")
+                shutil.copyfile(
+                    f"{self.new_path}/{name}.png", f"{self.old_path}/{name}.png"
+                )
             except shutil.SameFileError:
                 print("File Already Exists: {name}.png\n")
 
 
 if __name__ == "__main__":
-    new_icon_pack = IconPackGeneration("/Users/prabhjotsingh/Desktop/fiona exports",
-                                       "/Users/prabhjotsingh/Desktop/fiona exports")
+    new_icon_pack = IconPackGeneration(
+        "/Users/prabhjotsingh/Desktop/fiona exports",
+        "/Users/prabhjotsingh/Desktop/fiona exports",
+    )
     #  fix_path(r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\glassicons new"),
     # fix_path(r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\glassicons\app\src\main\res\drawable-nodpi"))
     # # "E:/GlassiCons Apps/Fiesta New","E:/GlassiCons Apps/fiesta icons/Blueprint-sample/app/src/main/res/drawable-nodpi")
