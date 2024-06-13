@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as ET
 from main import IconPackGeneration, fix_path
 from os import path, chdir
-import cv2
+import cv2,os,re
 
 
 class IconPackTools(IconPackGeneration):
@@ -34,6 +34,38 @@ class IconPackTools(IconPackGeneration):
                 print(f"{icons}: {shape[1]}x{shape[0]}")
             else:
                 ...
+
+    def remove_icons_not_in_appfilter(self):
+        ...
+    def add_icons_to_another_appfilter(self):
+        ...
+    def change_name(self):
+        for names in self.new_files:
+            if not self.check_name(names):
+                suggestion = names.lower()
+                user_input = input(f"Please Enter a name\nSuggestion:{suggestion}\n: ")
+                if user_input.lower() == "y":
+                    os.rename(
+                        f"{self.new_path}/{names}.png",
+                        f"{self.new_path}/{suggestion}.png",
+                    )
+                else:
+                    os.rename(
+                        f"{self.new_path}/{names}.png",
+                        f"{self.new_path}/{user_input}.png",
+                    )
+
+    def fix_case(self):
+        for name in self.new_files:
+            os.rename(
+                f"{self.new_path}/{name}.png", f"{self.new_path}/{name.lower()}.png"
+            )
+    def check_name(self, name):
+        if re.search("[#$%&()*+-.?@]", name) or re.search("[A-Z]", name):
+            return False
+        return True
+
+
 
 
 icon_diff = IconPackTools(

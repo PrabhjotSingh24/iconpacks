@@ -7,8 +7,8 @@ from xml.etree import ElementTree as ET
 PUNCTUATION = r"""!"#$%&'()*+,-./:;<=>?@[\]^`{|}~"""
 
 
-def fix_path(*strings):
-    return list(map(lambda x: x.replace("\\", "/"), strings))
+def fix_path(string):
+    return string.replace("\\", "/")
 
 
 class IconPackGeneration:
@@ -37,7 +37,9 @@ class IconPackGeneration:
                 "home_image.png",
                 "nav_bar.png",
             ]
-        self.new_path = new_path
+        self.new_path = (
+            new_path if os.name not in ["nt", "java"] else fix_path(new_path)
+        )
         self.old_path = old_path
         self.ignored_files = default_files_to_ignore
         self.new_files = []
@@ -157,34 +159,6 @@ class IconPackGeneration:
             self.new_files = list(map(lambda x: x.split(".")[0], self.new_files))
             self.old_files = list(map(lambda x: x.split(".")[0], self.old_files))
 
-    def check_name(self, name):
-        if re.search("[#$%&()*+-.?@]", name) or re.search("[A-Z]", name):
-            return False
-        return True
-
-    # TODO: Fix how the change_name method fixes the name
-    def change_name(self):
-        for names in self.new_files:
-            if not self.check_name(names):
-                suggestion = names.lower()
-                user_input = input(f"Please Enter a name\nSuggestion:{suggestion}\n: ")
-                if user_input.lower() == "y":
-                    os.rename(
-                        f"{self.new_path}/{names}.png",
-                        f"{self.new_path}/{suggestion}.png",
-                    )
-                else:
-                    os.rename(
-                        f"{self.new_path}/{names}.png",
-                        f"{self.new_path}/{user_input}.png",
-                    )
-
-    def fix_case(self):
-        for name in self.new_files:
-            os.rename(
-                f"{self.new_path}/{name}.png", f"{self.new_path}/{name.lower()}.png"
-            )
-
     def copy_files(self):
         for name in self.new_files:
             try:
@@ -197,15 +171,12 @@ class IconPackGeneration:
 
 if __name__ == "__main__":
     new_icon_pack = IconPackGeneration(
-        "/Users/prabhjotsingh/Desktop/fiona exports",
-        "/Users/prabhjotsingh/Desktop/fiona exports",
+        "C:\\Users\\prabh\\OneDrive\\Desktop\\GlassiCons Apps\\glassicons new",
+        "C:\\Users\\prabh\\OneDrive\\Desktop\\GlassiCons Apps\\glassicons test",
     )
-    #  fix_path(r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\glassicons new"),
-    # fix_path(r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\glassicons\app\src\main\res\drawable-nodpi"))
-    # # "E:/GlassiCons Apps/Fiesta New","E:/GlassiCons Apps/fiesta icons/Blueprint-sample/app/src/main/res/drawable-nodpi")
 
     new_icon_pack.load_files()
     # new_icon_pack.change_name()
     # new_icon_pack.fix_case()
-    new_icon_pack.generate()
-    # new_icon_pack.copy_files()
+    # new_icon_pack.generate()
+    new_icon_pack.copy_files()
