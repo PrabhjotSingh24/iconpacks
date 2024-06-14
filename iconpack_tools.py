@@ -11,6 +11,7 @@ class IconPackTools(IconPackGeneration):
         self.appfilter_path = appfilter_path
 
     def find_diff(self):
+        """finds icons that are mentioned in the appfilter file but are not available in the pack"""
         tree = ET.parse(self.appfilter_path)
         root = tree.getroot()
         appfilter_file = []
@@ -22,6 +23,7 @@ class IconPackTools(IconPackGeneration):
                 f.write(f"{i}\n")
 
     def icon_dimensions(self):
+        """checks the dimensions of the icons to be 192x192 pixels, uses check_dimensions method"""
         self.check_dimensions(self.new_files, self.new_path)
         if self.new_path != self.old_path:
             self.check_dimensions(self.old_files, self.old_path)
@@ -56,11 +58,13 @@ class IconPackTools(IconPackGeneration):
                     )
 
     def fix_case(self):
+        """changes the case of the icon names to lowercase"""
         for name in self.new_files:
             os.rename(
                 f"{self.new_path}/{name}.png", f"{self.new_path}/{name.lower()}.png"
             )
     def check_name(self, name):
+        """checks for special characters and uppercase letters in the name of the icon"""
         if re.search("[#$%&()*+-.?@]", name) or re.search("[A-Z]", name):
             return False
         return True
