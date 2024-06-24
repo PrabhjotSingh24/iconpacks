@@ -5,22 +5,25 @@ import cv2,os,re
 
 
 class IconPackTools(IconPackGeneration):
-    def __init__(self, new_path, old_path, appfilter_path):
+    def __init__(self, new_path, old_path, appfilter_path=None):
         super().__init__(new_path, old_path)
         super().load_files()
         self.appfilter_path = appfilter_path
 
     def find_diff(self):
         """finds icons that are mentioned in the appfilter file but are not available in the pack"""
-        tree = ET.parse(self.appfilter_path)
-        root = tree.getroot()
-        appfilter_file = []
-        for i in root.findall("item"):
-            appfilter_file.append(i.get("drawable"))
-        appfilter_file = set(appfilter_file)
-        with open("./difference.txt", "w", encoding="utf-8") as f:
-            for i in sorted(list(appfilter_file.difference(set(self.new_files)))):
-                f.write(f"{i}\n")
+        if self.appfilter_path is not None:
+            tree = ET.parse(self.appfilter_path)
+            root = tree.getroot()
+            appfilter_file = []
+            for i in root.findall("item"):
+                appfilter_file.append(i.get("drawable"))
+            appfilter_file = set(appfilter_file)
+            with open("./difference.txt", "w", encoding="utf-8") as f:
+                for i in sorted(list(appfilter_file.difference(set(self.new_files)))):
+                    f.write(f"{i}\n")
+        else:
+            return f"Appfilter file path expected, got {self.appfilter_path} instead."
 
     def icon_dimensions(self):
         """checks the dimensions of the icons to be 192x192 pixels, uses check_dimensions method"""
@@ -28,9 +31,9 @@ class IconPackTools(IconPackGeneration):
         if self.new_path != self.old_path:
             self.check_dimensions(self.old_files, self.old_path)
 
-    def check_dimensions(self, files, path):
-        chdir(path)
-        for icons in files:
+    def check_dimensions(self, new_files, new_path):
+        chdir(new_path)
+        for icons in new_files:
             shape = cv2.imread(f"{icons}.png").shape[:2]
             if shape != (192, 192):
                 print(f"{icons}: {shape[1]}x{shape[0]}")

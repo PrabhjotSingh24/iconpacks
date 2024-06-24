@@ -40,7 +40,7 @@ class IconPackGeneration:
         self.new_path = (
             new_path if os.name not in ["nt", "java"] else fix_path(new_path)
         )
-        self.old_path = old_path
+        self.old_path = old_path if os.name not in ["nt", "java"] else fix_path(old_path)
         self.ignored_files = default_files_to_ignore
         self.new_files = []
         self.old_files = []
