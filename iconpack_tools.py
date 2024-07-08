@@ -76,8 +76,8 @@ class IconPackTools(IconPackGeneration):
 
 
 icon_diff = IconPackTools(
-    *fix_path(r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\Glassicons Pro\app\src\main\res\drawable-nodpi",
+    *fix_path(r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\glassicons new",
               r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\Glassicons Pro\app\src\main\res\drawable-nodpi",
-              r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\Glassicons Pro\app\src\main\res\xml\appfilter.xml"))
+              ))
 # icon_diff.find_diff()
 icon_diff.icon_dimensions()

@@ -7,8 +7,8 @@ from xml.etree import ElementTree as ET
 PUNCTUATION = r"""!"#$%&'()*+,-./:;<=>?@[\]^`{|}~"""
 
 
-def fix_path(string):
-    return string.replace("\\", "/")
+def fix_path(*strings):
+    return list(map(lambda x:x.replace("\\", "/"),strings)) if strings[0] in ["nt","java"] else strings
 
 
 class IconPackGeneration:
@@ -38,9 +38,9 @@ class IconPackGeneration:
                 "nav_bar.png",
             ]
         self.new_path = (
-            new_path if os.name not in ["nt", "java"] else fix_path(new_path)
+            new_path
         )
-        self.old_path = old_path if os.name not in ["nt", "java"] else fix_path(old_path)
+        self.old_path = old_path
         self.ignored_files = default_files_to_ignore
         self.new_files = []
         self.old_files = []
@@ -53,7 +53,6 @@ class IconPackGeneration:
         root = ET.Element("resources")
         ver = ET.SubElement(root, "version").text = "1"
         root.append(ET.Comment(""))
-        # self.load_files() redundant line already called in the main
         ET.SubElement(root, "category", title="New")
         root.append(ET.Comment(""))
         for i in self.new_files:
@@ -76,7 +75,6 @@ class IconPackGeneration:
         root = ET.Element("resources")
         ver = ET.SubElement(root, "version").text = "1"
         root.append(ET.Comment(""))
-        # self.load_files() redundant line already called in the main
         ET.SubElement(root, "category", title="New")
         root.append(ET.Comment(""))
         for i in self.new_files:
@@ -171,12 +169,8 @@ class IconPackGeneration:
 
 if __name__ == "__main__":
     new_icon_pack = IconPackGeneration(
-        "C:\\Users\\prabh\\OneDrive\\Desktop\\GlassiCons Apps\\glassicons new",
-        "C:\\Users\\prabh\\OneDrive\\Desktop\\GlassiCons Apps\\glassicons test",
+        *fix_path(r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\glassicons new",r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\Glassicons Pro\app\src\main\res\drawable-nodpi")
     )
 
     new_icon_pack.load_files()
-    # new_icon_pack.change_name()
-    # new_icon_pack.fix_case()
-    # new_icon_pack.generate()
-    new_icon_pack.copy_files()
+
