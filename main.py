@@ -45,9 +45,12 @@ class IconPackGeneration:
         self.new_files = []
         self.old_files = []
 
-    def generate(self):
-        self.generate_drawable_blueprint()
-        self.generate_iconpack()
+    def generate(self,dashboard="candybar"):
+        if dashboard == "candybar":
+            self.generate_drawable_candybar()
+        else:
+            self.generate_drawable_blueprint()
+            self.generate_iconpack()
 
     def generate_drawable_candybar(self):
         root = ET.Element("resources")
@@ -59,14 +62,17 @@ class IconPackGeneration:
             ET.SubElement(root, "item", {"drawable": i})
         else:
             root.append(ET.Comment(""))
+        
         for i in ascii_uppercase:
             ET.SubElement(root, "category", title=i).tail = "\n "
+            root.append(ET.Comment(""))
             for j in self.old_files:
                 if j != "":
                     if j[0].upper() == i:
                         ET.SubElement(root, "item", {"drawable": j})
                 else:
                     root.append(ET.Comment(""))
+            root.append(ET.Comment(""))
         tree = ET.ElementTree(root)
         ET.indent(tree)
         tree.write("drawable.xml", encoding="utf-8", xml_declaration=True)
@@ -173,4 +179,6 @@ if __name__ == "__main__":
     )
 
     new_icon_pack.load_files()
+    new_icon_pack.generate()
+    # new_icon_pack.copy_files()
 
