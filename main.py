@@ -8,16 +8,34 @@ PUNCTUATION = r"""!"#$%&'()*+,-./:;<=>?@[\]^`{|}~"""
 
 
 def fix_path(*strings):
-    return list(map(lambda x:x.replace("\\", "/"),strings)) if strings[0] in ["nt","java"] else strings
+    """
+    Replaces a backward slash with forward slash if the current system is windows otherwise returns the list of strings as is
+
+    Args:
+        *strings (str): Multiple string arguments representing parts of a file path.
+
+    Returns:
+        str: A combined and fixed file path.
+    """
+    return list(map(lambda x: x.replace("\\", "/"), strings)) if strings[0] in ["nt", "java"] else strings
 
 
 class IconPackGeneration:
     def __init__(
+
         self,
         new_path,
         old_path,
         default_files_to_ignore=None,
     ):
+        """
+        Initializes the IconPackGeneration class.
+
+        Args:
+            new_path (str): Path to the new icons.
+            old_path (str): Path to the old icons.
+            default_files_to_ignore (list, optional): List of files to ignore. Defaults to None.
+        """
         if default_files_to_ignore is None:
             default_files_to_ignore = [
                 "app_splash_screen_picture.png",
@@ -45,7 +63,10 @@ class IconPackGeneration:
         self.new_files = []
         self.old_files = []
 
-    def generate(self,dashboard="candybar"):
+    def generate(self, dashboard="candybar"):
+        """Calls the generate_drawable and iconpack functions based on the given dashboard
+        Args:
+            dashboard (str, optional): Type of dashboard. Can be 'candybar' or 'blueprint'. Defaults to 'candybar'."""
         if dashboard == "candybar":
             self.generate_drawable_candybar()
         else:
@@ -53,6 +74,7 @@ class IconPackGeneration:
             self.generate_iconpack()
 
     def generate_drawable_candybar(self):
+        """Creates an XML for all the images in self.new_files and self.old_files objects, for 'candybar' dashbaord"""
         root = ET.Element("resources")
         ver = ET.SubElement(root, "version").text = "1"
         root.append(ET.Comment(""))
@@ -62,7 +84,7 @@ class IconPackGeneration:
             ET.SubElement(root, "item", {"drawable": i})
         else:
             root.append(ET.Comment(""))
-        
+
         for i in ascii_uppercase:
             ET.SubElement(root, "category", title=i).tail = "\n "
             root.append(ET.Comment(""))
@@ -78,6 +100,7 @@ class IconPackGeneration:
         tree.write("drawable.xml", encoding="utf-8", xml_declaration=True)
 
     def generate_drawable_blueprint(self):
+        """Creates an XML for all the images in self.new_files and self.old_files objects, for 'blueprint' dashbaord"""
         root = ET.Element("resources")
         ver = ET.SubElement(root, "version").text = "1"
         root.append(ET.Comment(""))
@@ -106,6 +129,7 @@ class IconPackGeneration:
         tree.write("drawable.xml", encoding="utf-8", xml_declaration=True)
 
     def generate_iconpack(self):
+        """Creates iconpack.xml for all the images in self.new_files and self.old_files objects, for 'blueprint' dashbaord"""
         all_files = sorted(self.new_files + self.old_files)
         root = ET.Element(
             "resources",
@@ -150,6 +174,12 @@ class IconPackGeneration:
         tree.write("iconpack.xml", encoding="utf-8", xml_declaration=True)
 
     def load_files(self, with_extensions=False):
+        """
+        Loads the files from specified paths.
+
+        Args:
+            with_extensions (bool, optional): Whether to include file extensions. Defaults to False.
+        """
         self.new_files = os.listdir(self.new_path)
         self.old_files = os.listdir(self.old_path)
         self.new_files = list(
@@ -164,6 +194,9 @@ class IconPackGeneration:
             self.old_files = list(map(lambda x: x.split(".")[0], self.old_files))
 
     def copy_files(self):
+        """
+        Copies the files from the old path to the new path.
+        """
         for name in self.new_files:
             try:
                 shutil.copyfile(
@@ -175,10 +208,10 @@ class IconPackGeneration:
 
 if __name__ == "__main__":
     new_icon_pack = IconPackGeneration(
-        *fix_path(r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\glassicons new",r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\Glassicons Pro\app\src\main\res\drawable-nodpi")
+        *fix_path(r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\glassicons new",
+                  r"C:\Users\prabh\OneDrive\Desktop\GlassiCons Apps\Glassicons Pro\app\src\main\res\drawable-nodpi")
     )
 
     new_icon_pack.load_files()
     new_icon_pack.generate()
     # new_icon_pack.copy_files()
-
