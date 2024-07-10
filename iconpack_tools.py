@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as ET
 from main import IconPackGeneration, fix_path
 from os import path, chdir
-import cv2,os,re
+import cv2, os, re
 
 
 class IconPackTools(IconPackGeneration):
@@ -42,9 +42,12 @@ class IconPackTools(IconPackGeneration):
 
     def remove_icons_not_in_appfilter(self):
         ...
+
     def add_icons_to_another_appfilter(self):
         ...
+
     def change_name(self):
+        """Changes the name of the file if it does not follow the guidelines and asks for user input if it cannot figure the name on its own [NOT COMPLETED]"""
         for names in self.new_files:
             if not self.check_name(names):
                 suggestion = names.lower()
@@ -66,13 +69,12 @@ class IconPackTools(IconPackGeneration):
             os.rename(
                 f"{self.new_path}/{name}.png", f"{self.new_path}/{name.lower()}.png"
             )
+
     def check_name(self, name):
         """checks for special characters and uppercase letters in the name of the icon"""
         if re.search("[#$%&()*+-.?@]", name) or re.search("[A-Z]", name):
             return False
         return True
-
-
 
 
 icon_diff = IconPackTools(
